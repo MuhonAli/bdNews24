@@ -52,19 +52,6 @@
           </ul>
         </li>    
           
-         <li class="treeview">
-          <a href="#">
-            <i class="fa fa-envelope"></i>
-            <span>Messages</span>
-            <span class="pull-right-container">
-              <i class="fa fa-arrow-circle-right pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="<?=base_url()?>Users/messages"><i class="fa fa-caret-right"></i>User Messages</a></li>
-          </ul>
-        </li> 
-          
      
     </section>
     <!-- /.sidebar -->

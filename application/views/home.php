@@ -14,19 +14,21 @@
 				<?php } ?>
 			</span>
 		</div>
-
-		 <form action="<?=base_url()?>News/index" method="get">
-			<div class="pos-relative size-a-2 bo-1-rad-22 of-hidden bocl11 m-tb-6">
-				<input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="text" name="search" placeholder="Search">
-				<button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
-					<i class="zmdi zmdi-search"></i>
-				</button>
-			</div>
-</form>
 	</div>
 </div>
 
+<div class="container">
+	<div class="">
+		<form action="<?=base_url()?>News/index" method="get">
+			<div class="row" style="float: right !important;">
+				<input type="date" name="created_on" class="form-control" style="float: left;width: 40%;">
+				<input type="text" name="search" class="form-control" placeholder="search" style="float: left;width: 40%;">
+				<input class="btn btn-success" type="submit" name="" value="search" style="float: left;">
 
+			</div>
+		</form>
+	</div>
+</div>
 <!-- Post -->
 <section class="bg0 p-t-70">
 	<div class="container">
@@ -154,49 +156,151 @@
 				</div>
 			</div>
 		</section>
-		<!-- Latest -->
+
 		<section class="bg0 p-t-60 p-b-35">
 			<div class="container">
 				<div class="row justify-content-center">
 					<div class="col-md-12 col-lg-12 p-b-20">
 						<div class="how2 how2-cl4 flex-s-c m-r-10 m-r-0-sr991">
 							<h3 class="f1-m-2 cl3 tab01-title">
-								Latest News
+								Pinned News
 							</h3>
 						</div>
 
 						<div class="row p-t-35">
-							<?php  foreach ($latests as $latest) {?>
-								<div class="col-sm-4 p-r-25 p-r-15-sr991">
-									<!-- Item latest -->	
-									<div class="m-b-45">
-										<a href="<?=base_url()?>News/details/<?=$latest['id']?>" class="wrap-pic-w hov1 trans-03">
-											<img src="<?=base_url()?>asset/images/news/<?=$latest['image']?>" alt="IMG" style="height: 200px;">
-										</a>
+							<?php 
+							if (!empty($pinned)) {
+								foreach ($pinned as $pin) {?>
+									<div class="col-sm-4 p-r-25 p-r-15-sr991">
+										<!-- Item latest -->	
+										<div class="m-b-45">
+											<a href="<?=base_url()?>News/details/<?=$pin['id']?>" class="wrap-pic-w hov1 trans-03">
+												<img src="<?=base_url()?>asset/images/news/<?=$pin['image']?>" alt="IMG" style="height: 200px;">
+											</a>
 
-										<div class="p-t-16">
-											<h5 class="p-b-5">
-												<a href="<?=base_url()?>News/details/<?=$latest['id']?>" class="f1-m-3 cl2 hov-cl10 trans-03">
-													<?=$latest['title']?>
-												</a>
-											</h5>
+											<div class="p-t-16">
+												<h5 class="p-b-5">
+													<a href="<?=base_url()?>News/details/<?=$pin['id']?>" class="f1-m-3 cl2 hov-cl10 trans-03">
+														<?=$pin['title']?>
+													</a>
+												</h5>
 
-											<span class="cl8">
+												<span class="cl8">
 
-												<span class="f1-s-3 m-rl-3">
-													-
+													<span class="f1-s-3 m-rl-3">
+														-
+													</span>
+
+													<span class="f1-s-3">
+														<?=date('h:i a, d M',strtotime($pin['created_on']))?>
+													</span>
 												</span>
-
-												<span class="f1-s-3">
-													<?=date('h:i a, d M',strtotime($latest['created_on']))?>
-												</span>
-											</span>
+											</div>
 										</div>
 									</div>
-								</div>
-							<?php } ?>
+								<?php } } else{ ?>
+
+									<h2 class="text-center" style="font-size: 30px;margin-left: 40%;">No Pinned News Found!</h2>
+								<?php		} ?>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+
+		<section class="bg0 p-t-60 p-b-35">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-12 col-lg-12 p-b-20">
+						<div class="how2 how2-cl4 flex-s-c m-r-10 m-r-0-sr991">
+							<h3 class="f1-m-2 cl3 tab01-title">
+								Todays News
+							</h3>
+						</div>
+
+						<div class="row p-t-35">
+							<?php 
+							if (!empty($todays)) {
+								foreach ($todays as $today) {?>
+									<div class="col-sm-4 p-r-25 p-r-15-sr991">
+										<!-- Item latest -->	
+										<div class="m-b-45">
+											<a href="<?=base_url()?>News/details/<?=$today['id']?>" class="wrap-pic-w hov1 trans-03">
+												<img src="<?=base_url()?>asset/images/news/<?=$today['image']?>" alt="IMG" style="height: 200px;">
+											</a>
+
+											<div class="p-t-16">
+												<h5 class="p-b-5">
+													<a href="<?=base_url()?>News/details/<?=$today['id']?>" class="f1-m-3 cl2 hov-cl10 trans-03">
+														<?=$today['title']?>
+													</a>
+												</h5>
+
+												<span class="cl8">
+
+													<span class="f1-s-3 m-rl-3">
+														-
+													</span>
+
+													<span class="f1-s-3">
+														<?=date('h:i a, d M',strtotime($today['created_on']))?>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								<?php } } else{ ?>
+
+									<h2 class="text-center" style="font-size: 30px;margin-left: 40%;">No News Posted Today!</h2>
+								<?php		} ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- Latest -->
+			<section class="bg0 p-t-60 p-b-35">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-md-12 col-lg-12 p-b-20">
+							<div class="how2 how2-cl4 flex-s-c m-r-10 m-r-0-sr991">
+								<h3 class="f1-m-2 cl3 tab01-title">
+									Latest News
+								</h3>
+							</div>
+
+							<div class="row p-t-35">
+								<?php  foreach ($latests as $latest) {?>
+									<div class="col-sm-4 p-r-25 p-r-15-sr991">
+										<!-- Item latest -->	
+										<div class="m-b-45">
+											<a href="<?=base_url()?>News/details/<?=$latest['id']?>" class="wrap-pic-w hov1 trans-03">
+												<img src="<?=base_url()?>asset/images/news/<?=$latest['image']?>" alt="IMG" style="height: 200px;">
+											</a>
+
+											<div class="p-t-16">
+												<h5 class="p-b-5">
+													<a href="<?=base_url()?>News/details/<?=$latest['id']?>" class="f1-m-3 cl2 hov-cl10 trans-03">
+														<?=$latest['title']?>
+													</a>
+												</h5>
+
+												<span class="cl8">
+
+													<span class="f1-s-3 m-rl-3">
+														-
+													</span>
+
+													<span class="f1-s-3">
+														<?=date('h:i a, d M',strtotime($latest['created_on']))?>
+													</span>
+												</span>
+											</div>
+										</div>
+									</div>
+								<?php } ?>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>

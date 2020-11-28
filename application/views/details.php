@@ -71,11 +71,11 @@
 											<div class="col-md-12">
 												<form accept-charset="UTF-8" action="<?=base_url()?>Review/add_reviews/<?php echo $news[0]['id']; ?>" method="post">
 
-													<textarea class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Comment..." rows="5"></textarea>
+													<textarea required="" class="form-control animated" cols="50" id="new-review" name="comment" placeholder="Comment..." rows="5"></textarea>
 
 													<div class="text-right">
 														<div class="stars starrr" data-rating="0"></div><br>
-														<button class="size-a-17 bg2 borad-3 f1-s-12 cl0 hov-btn1 trans-03 p-rl-15 m-t-10" type="submit">Post Comment</button>
+														<button class="size-a-17 btn-info" type="submit">Post Comment</button>
 													</div>
 													<br>
 												</form>
@@ -91,14 +91,43 @@
 							<!-- Start Single Content -->
 							<div class="review__wrapper">
 								<!-- Start Single Review -->
-								<?php foreach ($reviews as $review) { ?>
-									<div class="single__review d-flex">
+								<?php foreach ($reviews as $review) { 
+									$replies =  $this->db->select('*')->from('replies')->join('users', 'replies.user_id =users.id')->where('replies.comment_id',$review['review_id'])->get()->result_array();
+								//	echo $this->db->last_query();
+									?>
+									<div class="" style='margin-bottom: 60px'>
+										<div class="single__review d-flex">
 
-										<div class="review__details">
-											<h3><strong>Email : </strong><?=$review['email']?></h3>
-											<p><strong>Comment : </strong><?=$review['comment']?></p>
+
+											<div class="review__details">
+												<h3><strong>Email : </strong><?=$review['email']?></h3>
+												<p><strong>Comment : </strong><?=$review['comment']?></p>
+											</div>
+										</div>
+										<br>
+
+										<?php foreach ($replies as $reply) { ?>
+											<div class="single__review d-flex" style="margin-left:10%;width: 90%;margin-bottom: 10px;display:block">
+
+												<div class="review__details" style="display: block">
+													<h3><strong>Email : </strong><?=$reply['email']?></h3>
+													<p><strong>Comment : </strong><?=$reply['text']?></p>
+												</div>
+											</div>
+										<?php } ?>
+
+										<div class="single__review d-flex" style="margin-left:10%;width: 90%;margin-bottom: 10px;">
+
+											<form action="<?=base_url()?>Review/add_reply/<?=$review['review_id']?>" method="post" style="width: 100%;" >
+												<div class="review__details" style="height: 110%;">
+													<textarea required="" name="text" placeholder=" Leave a Reply..." style="width: 100%" rows="4"></textarea>
+													<input class="btn btn-info" type="submit" name="reply" style="margin-left:90%;margin-top: 10px;">
+												</div>
+											</form>
+
 										</div>
 									</div>
+
 									<!-- End Single Review -->
 								<?php } ?>
 							</div>
@@ -139,21 +168,20 @@
 							</h3>
 						</div>
 
-				<ul class="p-t-35">
-									<?php
-									$i=1; foreach ($populars as $popular) {?>
-										<li class="flex-wr-sb-s p-b-22">
-											<div class="size-a-8 flex-c-c borad-3 size-a-8 bg9 f1-m-4 cl0 m-b-6">
-												<?php echo $i;
-												$i++ ?>
-											</div>
-
-											<a href="<?=base_url()?>News/details/<?=$popular['id']?>" class="size-w-3 f1-s-7 cl3 hov-cl10 trans-03">
-												<?=$popular['title']?>
-											</a>
-										</li>
-									<?php } ?>
-								</ul>
+						<ul class="p-t-35">
+							<?php
+							$i=1; foreach ($populars as $popular) {?>
+								<li class="flex-wr-sb-s p-b-22">
+									<div class="size-a-8 flex-c-c borad-3 size-a-8 bg9 f1-m-4 cl0 m-b-6">
+										<?php echo $i;
+										$i++ ?>
+									</div>
+									<a href="<?=base_url()?>News/details/<?=$popular['id']?>" class="size-w-3 f1-s-7 cl3 hov-cl10 trans-03">
+										<?=$popular['title']?>
+									</a>
+								</li>
+							<?php } ?>
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -162,10 +190,10 @@
 </section>
 
 <style>
-.review__details{
-	padding: 10px;
-    background: #17b978;
-    width: 100%;
-    color: white;
-}
+	.review__details{
+		padding: 20px;
+		background: #e9ecef;
+		width: 100%;
+		color: #111;
+	}
 </style>

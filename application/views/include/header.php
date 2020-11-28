@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="<?=base_url()?>asset/news/images/icons/favicon.png"/>
+	<!-- <link rel="icon" type="image/png" href="<?=base_url()?>asset/news/images/icons/favicon.png"/> -->
 	<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="<?=base_url()?>asset/news/vendor/bootstrap/css/bootstrap.min.css">
 	<!--===============================================================================================-->
@@ -69,7 +69,7 @@
 			<div class="wrap-header-mobile">
 				<!-- Logo moblie -->		
 				<div class="logo-mobile">
-					<a href="<?=base_url()?>"><img src="<?=base_url()?>asset/news/images/icons/logo-01.png" alt="IMG-LOGO"></a>
+					<a href="<?=base_url()?>"><img src="<?=base_url()?>asset/news/images/icons/logo-0001.png" alt="IMG-LOGO"></a>
 				</div>
 
 				<!-- Button show menu -->
@@ -204,8 +204,8 @@
 
 				<!-- Banner -->
 				<div class="banner-header">
-									<div class="right-topbar">
-										<span><strong>Follow us on </strong></span>
+					<div class="right-topbar">
+						<span><strong>Follow us on </strong></span>
 						<a style="padding: 10px;background: #3B5998;color: white;" target="_blank" href="https://www.facebook.com/">
 							<span class="fab fa-facebook-f"></span>
 						</a>
@@ -232,15 +232,15 @@
 					<!-- Menu desktop -->
 					<nav class="menu-desktop">
 						<a class="logo-stick" href="<?=base_url()?>asset/news/index.html">
-							<img src="<?=base_url()?>asset/news/images/icons/logo-01.png" alt="LOGO">
+							<img src="<?=base_url()?>asset/news/images/icons/logo-0001.png" alt="LOGO">
 						</a>
 
 						<ul class="main-menu">
-<?php foreach ($categories as $category) { ?>
-							<li class="mega-menu-item">
-								<a href="<?=base_url()?>News/category/<?=$category['id']?>"><?php  echo $category['name']; ?> </a>
-							</li>
-<?php } ?>
+							<?php foreach ($categories as $category) { ?>
+								<li class="mega-menu-item">
+									<a href="<?=base_url()?>News/category/<?=$category['id']?>"><?php  echo $category['name']; ?> </a>
+								</li>
+							<?php } ?>
 						</ul>
 					</nav>
 				</div>

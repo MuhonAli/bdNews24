@@ -11,13 +11,8 @@ class Admin_dashboard extends CI_Controller {
 		if(($this->session->userdata('admin_id'))){
 		}else{ redirect('Admin'); }
 
-	$data['users']=  $this->db->select('*')->from('users')->order_by('id','desc')->limit(10)->get()->result_array();
+		$data['admin'] = $this->db->select('*')->from('admins')->get()->result_array();
 
-	$data['total_items']=  $this->db->select('id')->from('news')->get()->num_rows();
-	$data['total_categories']=  $this->db->select('id')->from('categories')->get()->num_rows();
-	$data['total_contact']=  $this->db->select('id')->from('contact')->get()->num_rows();
-	$data['total_users']=  $this->db->select('id')->from('users')->get()->num_rows();
-	
 			$this->load->view('admin/header');
 			$this->load->view('admin/sidebar');
 			$this->load->view('admin/admin_dashboard', $data);

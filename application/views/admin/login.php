@@ -32,7 +32,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="adminlogniarea login-box-body">
-    <p class="login-box-msg">Log in to Admin Panel</p>
+    <p class="login-box-msg">Admin Panel</p>
 <?php  if($this->session->flashdata('message')){ echo "<center>".$this->session->flashdata('message')."</center>"; } ?>
     <form method="post" action="<?=base_url()?>Admin">
       <div class="form-group has-feedback">

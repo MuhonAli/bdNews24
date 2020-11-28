@@ -6,12 +6,18 @@ class Welcome extends CI_Controller {
 
 	public function index()
 	{
+		 $today = $date = date('Y-m-d');
+		 $days_ago = date('Y-m-d', strtotime('-5 days', strtotime($today)));
 
 		$data['categories']=  $this->db->select('*')->from('categories')->get()->result_array();
 
 		$data['populars']=  $this->db->select('*')->from('news')->order_by('views','desc')->limit(5)->get()->result_array();
 	
 		$data['latests']=  $this->db->select('*')->from('news')->order_by('id','desc')->limit(9)->get()->result_array();
+
+		$data['todays']=  $this->db->select('*')->from('news')->like('created_on',$today)->order_by('id','desc')->get()->result_array();
+
+		$data['pinned'] =  $this->db->select('*')->from('news')->where('pinned_on >=',$days_ago)->where('pinned_on <=',$today)->order_by('id','desc')->get()->result_array();
 
 		$data['topNews']=  $this->db->select('*')->from('news')->order_by('id','desc')->limit(7)->get()->result_array();
 
@@ -34,17 +40,22 @@ class Welcome extends CI_Controller {
 		$this->load->view('include/footer');
 	}
 
-public function sms(){
-	require_once "vendor/autoload.php";
-	$basic  = new \Nexmo\Client\Credentials\Basic('c1cf87d5', '0TcYhbYWKNNwB3eW');
-$client = new \Nexmo\Client($basic);
+	public function pin_news($id)
+	{
+		$today = $date = date('Y-m-d');
+		 $pinned_on = $_GET['pinned_on'];
+		 if (!empty($pinned_on)) {
+		 			$this->db->set('pinned_on', $pinned_on);
+		 } else{
+		$this->db->set('pinned_on', $today);
+		 }
 
-$message = $client->message()->send([
-    'to' => '8801748613498',
-    'from' => 'Nexmo',
-    'text' => 'Hello from Nexmo'
-]);
-		}
+		$this->db->where('id',$id);
+		$this->db->update('news');
+		$msg='<div class="alert alert-success">News pinned successfully!</div>';
+		$this->session->set_flashdata('message',$msg);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
 
 
 }

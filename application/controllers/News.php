@@ -7,9 +7,16 @@ class News extends CI_Controller {
 	{
 		$this->load->library('pagination');
 		$data['categories']=  $this->db->select('*')->from('categories')->get()->result_array();
+	
 		if (!empty($_GET['search'])) {
 			$query = $this->db->LIKE('title', $_GET['search'],'both');
 			$data['search']  = $_GET['search'];
+			
+		}
+
+		if (!empty($_GET['created_on'])) {
+			$query = $this->db->LIKE('created_on', $_GET['created_on']);
+			$data['created_on']  = $_GET['created_on'];
 			
 		}
 
@@ -61,6 +68,12 @@ class News extends CI_Controller {
 			
 		}
 
+				if (!empty($_GET['created_on'])) {
+			$query = $this->db->LIKE('created_on', $_GET['created_on']);
+			$data['created_on']  = $_GET['created_on'];
+			
+		}
+
 		$query = $this->db->limit($config['per_page'], $data['segment'])->select('*')->from('news')->order_by('id','desc')->get();
 
 		$data['result'] = $query->result_array();
@@ -83,7 +96,11 @@ class News extends CI_Controller {
 
 		$data['populars']=  $this->db->select('*')->from('news')->order_by('views','desc')->limit(5)->get()->result_array();
 	
-		$data['reviews'] =  $this->db->select('*')->from('review')->join('users', 'review.user_id =users.id')->where('review.news_id',$id)->get()->result_array();
+		$data['reviews'] =  $this->db->select('*,review.id as review_id, users.id as id')->from('review')->join('users', 'review.user_id =users.id')->where('review.news_id',$id)->get()->result_array();
+
+/*echo "<pre>";
+		var_dump($data['reviews'] );
+		exit;*/
 
 		$data['categoryForFooter']=  $this->db->select('*')->from('categories')->limit(5)->get()->result_array();
 		$data['popularForFooter']=  $this->db->select('*')->from('news')->order_by('views','desc')->limit(3)->get()->result_array();

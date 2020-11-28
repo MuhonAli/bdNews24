@@ -48,6 +48,34 @@ class Admin extends CI_Controller {
 		}
 	}
 
+
+
+	public function change_email($id)
+	{
+		$email = $this->input->post('email');
+		$this->db->set('email', $email);
+		$this->db->where('id',$id);
+		$this->db->update('admins');
+		$msg='<div class="alert alert-success">Email Updated successfully!</div>';
+		$this->session->set_flashdata('message',$msg);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+	public function change_password($id)
+	{
+
+		$password = md5($this->input->post('password'));
+		$this->db->set('password', $password);
+		$this->db->where('id',$id);
+		$this->db->update('admins');
+
+		$msg='<div class="alert alert-success">Password Updated successfully!</div>';
+		
+		$this->session->set_flashdata('message',$msg);
+		redirect($_SERVER['HTTP_REFERER']);
+	}
+
+
 	public function logout()
 	{
 		$this->session->sess_destroy();

@@ -11,7 +11,7 @@ class Review extends CI_Controller {
 		if(($this->session->userdata('userid'))){
 		}else{ redirect('Login'); }
 		
-		$check = $this->db->select('user_id')->from('review')->where('user_id',$this->session->userdata('userid'))->where('news_id', $id)->get()->num_rows();
+/*		$check = $this->db->select('user_id')->from('review')->where('user_id',$this->session->userdata('userid'))->where('news_id', $id)->get()->num_rows();
 		if ($check > 0) {
 
 			$msg='<div class="alert alert-danger">You already reviewed on this product.</div>';
@@ -20,7 +20,7 @@ class Review extends CI_Controller {
 			
 			redirect($_SERVER['HTTP_REFERER']); 
 
-		}
+		}*/
 
 		$this->form_validation->set_rules('comment', 'Comment', 'required');
 
@@ -51,7 +51,7 @@ class Review extends CI_Controller {
 			/*update review rating*/
 
 
-			$msg='<div class="alert alert-success">Reviewed successfully!</div>';
+			$msg='<div class="alert alert-success">Commented successfully!</div>';
 
 			$this->session->set_flashdata('message',$msg);
 			redirect($_SERVER['HTTP_REFERER']);
@@ -59,6 +59,23 @@ class Review extends CI_Controller {
 
 		}
 
+	}
+
+	public function add_reply($id){
+		
+		if(($this->session->userdata('userid'))){
+		}else{ redirect('Login'); }
+
+		$data['user_id']=$this->session->userdata('userid');
+		$data['comment_id']=$id;
+		$data['text']=$this->input->post('text');
+
+		$this->db->insert('replies',$data);
+
+		$msg='<div class="alert alert-success">Replied successfully!</div>';
+
+		$this->session->set_flashdata('message',$msg);
+		redirect($_SERVER['HTTP_REFERER']);
 	}
 
 }
